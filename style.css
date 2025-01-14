@@ -1,0 +1,61 @@
+@font-face {
+	font-family: "Saitamaar";
+	src: 	url("/fonts/Saitamaar.woff2") format("woff2"),
+		url("/fonts/Saitamaar.otf") format("otf"),
+		url("/fonts/Saitamaar.ttf") format("ttf");
+	font-display: swap;
+}
+
+:root {
+	--fonts:
+		"Saitamaar",
+		"MS UI Gothic",
+		sans-serif;
+}
+
+body {
+	font-family: var(--fonts);
+	font-size: 16px; 
+}
+
+header {
+	float: left;
+	margin: 30px 60px 30px 30px;
+}
+
+a:link {
+	color: black;
+	background-color: white;
+}
+
+a:hover {
+	color: white;
+	background-color: black;
+}
+
+nav {
+	padding: 25px 45px 60px;
+	margin: 0;
+}
+
+nav ul {
+	display: inline-block;
+	vertical-align: top;
+}
+
+nav ul li {
+	list-style-type: none;
+	white-space: pre;
+}
+
+nav ul li a {
+	text-decoration: none;
+}
+
+main {
+	max-width: 624px;
+	clear: both;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
