@@ -33,6 +33,11 @@ a:hover {
 	background-color: black;
 }
 
+img {
+	width: 100%;
+	object-fit: cover;
+}
+
 nav {
 	padding: 25px 45px 60px;
 	margin: 0;
