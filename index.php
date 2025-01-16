@@ -35,7 +35,7 @@
 	# root links
 	foreach ($rootFiles as $file) {
 		if (is_dir($file)) {
-			echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">' . pathinfo($file)['filename'] . '</a></li>';
+			echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
 		}
 	}
 	echo '	</ul>';
