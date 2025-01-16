@@ -1,4 +1,4 @@
-# Welcome!
+# welcome
 This homepage was written in markdown.
 
 Link support! Click [here](test).

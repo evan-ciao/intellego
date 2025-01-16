@@ -12,74 +12,96 @@
 <body>
 	<?php
 	require 'Parsedown.php';
-	$parsedown = new Parsedown();
+	$GLOBALS['parsedown'] = new Parsedown();
 
-	$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+	$GLOBALS['pagesPath'] = 'pages/';
+	$GLOBALS['requestUri'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	
-	$pagesPath = 'pages/';
-	
-	# get all files in pages folder
-	$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pagesPath));
-	$dirslist = [];
-	$fileslist = [];
-	foreach ($files as $file) {
-		if ($file->isDir()) { $dirslist[] = $file->getPathname(); }
-		$fileslist[] = $file->getPathname();
-	}
+	$pageName = substr($GLOBALS['requestUri'], 1);
+	$pageHtml = get_page_html($pageName);
+	$pagePath = get_page_path($pageName);
+
+	# construct tree directory
+	$rootFiles = glob($GLOBALS['pagesPath'] . '*');
 
 	### HEADER
 	echo '<header>';
-	echo '	<h1>intellego</h1>';
+	echo '	<h1><a href="/">intellego</a></h1>';
 	echo '</header>';
 
 	### NAVBAR
 	echo '<nav>';
 	echo '	<ul>';
-	echo '		<li><a href="/">home</a></li>';
+	# root links
+	foreach ($rootFiles as $file) {
+		if (is_dir($file)) {
+			echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">' . pathinfo($file)['filename'] . '</a></li>';
+		}
+	}
+	echo '	</ul>';
+	echo '	<ul>';
+	# page directories links
+	if($pagePath != '' && $pageName != '') {
+		$branchFiles = glob($pagePath . '*');
+		foreach ($branchFiles as $file) {
+			if (is_dir($file)) {
+				echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
+			}
+		}
+		foreach ($branchFiles as $file) {
+			$fileName = pathinfo($file)['filename'];
+			if (!is_dir($file)) {
+				if($fileName == $pageName)
+					echo '<li><a class="selected" href="' . $fileName . '">' . $fileName . '</a></li>';
+				else
+					echo '<li><a href="' . $fileName . '">' . $fileName . '</a></li>';
+			}
+		}
+	}
 	echo '	</ul>';
 	echo '</nav>';
 
 	### MAIN
 	echo '<main>';
-
-	switch ($requestUri) {
-		case '/':
-			# load homepage
-			$homeText = file_get_contents($pagesPath . 'home.md');
-			$html = $parsedown->text($homeText);
-			echo $html;
-			break;
-		
-		default:
-			# load requested page
-			# get page name from url route request
-			$pageName = substr($requestUri, 1);
-			$pageName .= '.md'; 
-
-			# load note
-			foreach ($fileslist as $file) {
-				if (str_contains($file, $pageName))
-				{
-					$noteText = file_get_contents($file);
-					$html = $parsedown->text($noteText);
-					echo $html;
-					break 2;
-				}
-			}
-			
-			$notfoundText = file_get_contents($pagesPath . 'notfound.md');
-			$html = $parsedown->text($notfoundText);
-			echo $html;
-
-			break;
-	}
-
+	echo $pageHtml;
 	echo '</main>';
 
 	### FOOTER
 	echo '<footer>';
 	echo '	<p>footer</p>';
 	echo '</footer>';
+
+	function get_page_html($name)
+	{
+		$pages = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($GLOBALS['pagesPath']));
+		foreach ($pages as $page) {
+			if(!is_dir($page) && str_contains($page, $name)) {
+				$text = file_get_contents($page);
+				$html = $GLOBALS['parsedown']->text($text);
+				return $html;
+			}
+		}
+
+		# check if the page requested is marked as a folder
+		if(str_contains($name, '-fdi')) {
+			return "<h1>" . substr($name, 0, strlen($name) - 4) . " folder</h1>\n<p>This folder doesn't contain a valid index file marked with \"-fdi\".";
+		}
+
+		return '<p>404 - Page not found</p>';
+	}
+
+	function get_page_path($name)
+	{
+		$pages = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($GLOBALS['pagesPath']));
+
+		foreach ($pages as $page) {
+			if(!is_dir($page) && str_contains($page, $name)) {
+				return pathinfo($page)['dirname'] . '/';
+			}
+		}
+
+		return '';
+	}
 	?>
 </body>
 </html>
