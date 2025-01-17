@@ -74,3 +74,38 @@ main {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* page metadata styling */
+
+.page-metadata {
+}
+
+.page-metadata hr {
+	border: 1px dashed;
+}
+
+.page-title {
+	margin: 0;
+	float: left;
+}
+
+.page-date {
+	margin: 0;
+	float: right;
+}
+
+.page-tags {
+	padding: 0;
+	list-style: none;
+	list-style-type: none;
+}
+
+.page-tags li {
+	display: inline;
+}
+
+/* tags */
+.tag-seed {
+	background-color: #714D39;
+	color: white;
+}

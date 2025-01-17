@@ -12,7 +12,8 @@
 <body>
 	<?php
 	require 'Parsedown.php';
-	$GLOBALS['parsedown'] = new Parsedown();
+	$GLOBALS['parsedown'] = new Extension();
+	$GLOBALS['parsedown']->setMarkupEscaped(false);
 
 	$GLOBALS['pagesPath'] = 'pages/';
 	$GLOBALS['requestUri'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -31,31 +32,32 @@
 
 	### NAVBAR
 	echo '<nav>';
-	echo '	<ul>';
-	# root links
-	foreach ($rootFiles as $file) {
-		if (is_dir($file)) {
-			echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
-		}
-	}
-	echo '	</ul>';
-	echo '	<ul>';
-	# page directories links
-	if($pagePath != '' && $pageName != '') {
-		$branchFiles = glob($pagePath . '*');
+	# recursive folders
+	$dirs = explode('/', $pagePath);
+	$currentPath = '';
+
+	for ($i = 0; $i < count($dirs) - 1; $i++) {
+		$currentPath .= $dirs[$i] . '/';
+		$branchFiles = glob($currentPath . '*');
+
+		echo '	<ul>';
 		foreach ($branchFiles as $file) {
 			if (is_dir($file)) {
 				echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
 			}
 		}
-		foreach ($branchFiles as $file) {
-			$fileName = pathinfo($file)['filename'];
-			if (!is_dir($file)) {
-				if($fileName == $pageName)
-					echo '<li><a class="selected" href="' . $fileName . '">' . $fileName . '</a></li>';
-				else
-					echo '<li><a href="' . $fileName . '">' . $fileName . '</a></li>';
-			}
+		echo '	</ul>';
+	}
+	# page directories links
+	echo '	<ul>';
+	$branchFiles = glob($pagePath . '*');
+	foreach ($branchFiles as $file) {
+		$fileName = pathinfo($file)['filename'];
+		if (!is_dir($file)) {
+			if($fileName == $pageName)
+				echo '<li><a class="selected" href="' . $fileName . '">' . $fileName . '</a></li>';
+			else
+				echo '<li><a href="' . $fileName . '">' . $fileName . '</a></li>';
 		}
 	}
 	echo '	</ul>';
