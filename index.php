@@ -33,20 +33,23 @@
 	### NAVBAR
 	echo '<nav>';
 	# recursive folders
-	$dirs = explode('/', $pagePath);
-	$currentPath = '';
-
-	for ($i = 0; $i < count($dirs) - 1; $i++) {
-		$currentPath .= $dirs[$i] . '/';
-		$branchFiles = glob($currentPath . '*');
-
-		echo '	<ul>';
-		foreach ($branchFiles as $file) {
-			if (is_dir($file)) {
-				echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
+	if($pagePath != 'null')
+	{
+		$dirs = explode('/', $pagePath);
+		$currentPath = '';
+	
+		for ($i = 0; $i < count($dirs) - 1; $i++) {
+			$currentPath .= $dirs[$i] . '/';
+			$branchFiles = glob($currentPath . '*');
+	
+			echo '	<ul>';
+			foreach ($branchFiles as $file) {
+				if (is_dir($file)) {
+					echo '<li><a href="' . pathinfo($file)['filename'] . '-fdi' . '">>' . pathinfo($file)['filename'] . '</a></li>';
+				}
 			}
+			echo '	</ul>';
 		}
-		echo '	</ul>';
 	}
 	# page directories links
 	echo '	<ul>';
@@ -102,7 +105,7 @@
 			}
 		}
 
-		return '';
+		return 'null';
 	}
 	?>
 </body>

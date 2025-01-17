@@ -17,8 +17,6 @@ Intellego is a tool for thought, and the context in which pages are read or writ
 > “In the old system, the question is: Under which topic do I store this note? In the new system, the question is: In which context will I want to stumble upon it again?”
 > <cite>Ahrens, Sönke - How to Take Smart Notes</cite>
 
-{c:#AF22F2}Testing{/c}
-
 ## GRRID
 - **G** Glossary - factually define a thing
 - **R** Reference - notes on information
