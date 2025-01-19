@@ -73,7 +73,21 @@
 
 	### FOOTER
 	echo '<footer>';
-	echo '	<p>footer</p>';
+
+	# arvelie date
+	$epoque = new DateTime('2025-01-14');
+	$now = new DateTime();
+	$elapsed = $now->diff($epoque);
+
+	$arvelieDay = $elapsed->d % 14;
+	$arvelieYear = floor($elapsed->d / 364);
+	$arvelieMonth = floor(($elapsed->d / 14)) - ($elapsed->y * 26);
+	$alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+	echo '	<p>';
+	echo '<strong>' . str_pad($arvelieYear, 2, "0", STR_PAD_LEFT) . $alphabet[$arvelieMonth] . str_pad($arvelieDay, 2, "0", STR_PAD_LEFT) . '</strong>';
+	echo ' arvelie time since epoque ' . $now->format('Y-m-d') . '.';
+	echo '	</p>';
 	echo '</footer>';
 
 	function get_page_html($name)

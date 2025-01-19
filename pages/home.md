@@ -1,3 +1,9 @@
+{metadata}
+title: homepage
+date: 00A00
+tags: [me, evergreen]
+{end}
+
 # welcome
 This homepage was written in markdown.
 
