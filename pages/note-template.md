@@ -7,4 +7,6 @@ tags: [me, seed]
 # hello world
 body of the page.
 
-$[sussy](home)
+{references}
+[sussy](home)
+{end}

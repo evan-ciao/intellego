@@ -75,8 +75,7 @@ main {
 	margin-right: auto;
 }
 
-/* page metadata styling */
-
+/* page metadata */
 .page-metadata {
 }
 
@@ -108,4 +107,30 @@ main {
 .tag-seed {
 	background-color: #714D39;
 	color: white;
+}
+
+.tag-fern {
+	background-color: #385D70;
+	color: white;
+}
+
+.tag-evergreen {
+	background-color: #38704B;
+	color: white;
+}
+
+/* page references */
+.page-references h4 {
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+.page-references ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-type: none;
+}
+
+.page-references li {
+	display: inline;
 }

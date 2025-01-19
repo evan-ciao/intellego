@@ -1998,6 +1998,65 @@ class Extension extends Parsedown
     function __construct()
     {
         $this->BlockTypes['{'][] = 'MetaData';
+        $this->BlockTypes['{'][] = 'References';
+    }
+
+    protected function blockReferences($line, $block)
+    {
+        if (preg_match('/^{references}/', $line['text']))
+        {
+            return array(
+                'element' => array(
+                    'name' => 'span',
+                    'text' => '',
+                    'attributes' => array(
+                        'class' => 'page-references',
+                    ),
+                    'elements' => array(
+                        'h4' => array(
+                            'name' => 'h4',
+                            'text' => 'references',
+                        ),
+                        'references' => array(
+                            'name' => 'ul',
+                            'elements' => array(),
+                        ),
+                    ),
+                ),
+            );
+        }
+    }
+
+    protected function blockReferencesContinue($line, $block)
+    {
+        if (isset($block['complete']))
+            return;
+
+        // end found
+        if (preg_match('/^{end}/', $line['text']))
+        {
+            $block['complete'] = true;
+            return $block;
+        }
+
+        // link found
+        if (preg_match('/^\[(.+)\]\((.+)\)$/', $line['text'], $matches))
+        {
+            $block['element']['elements']['references']['elements'][] = array(
+                'name' => 'a',
+                'text' => $matches[1],
+                'attributes' => array(
+                    'href' => $matches[2],
+                ),
+            );
+        }
+
+        return $block;
+    }
+
+    protected function blockReferencesComplete($block)
+    {
+        return $block;
     }
 
     protected function blockMetaData($line, $block)
@@ -2005,7 +2064,6 @@ class Extension extends Parsedown
         if (preg_match('/^{metadata}/', $line['text']))
         {
             return array(
-                'char' => $line['text'][0],
                 'element' => array(
                     'name' => 'span',
                     'text' => '',
