@@ -2076,11 +2076,11 @@ class Extension extends Parsedown
                             'elements' => array(
                                 'title' => array(
                                     'name' => 'p',
-                                    'text' => 'title',
+                                    'text' => '',
                                 ),
                                 'date' => array(
                                     'name' => 'p',
-                                    'text' => 'date',
+                                    'text' => '-----',
                                 ),
                             ),
                             'attributes' => array(

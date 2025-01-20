@@ -75,9 +75,9 @@
 	echo '<footer>';
 
 	# arvelie date
-	$epoque = new DateTime('2025-01-14');
+	$epoch = new DateTime('2025-01-14');
 	$now = new DateTime();
-	$elapsed = $now->diff($epoque);
+	$elapsed = $now->diff($epoch);
 
 	$arvelieDay = $elapsed->d % 14;
 	$arvelieYear = floor($elapsed->d / 364);
@@ -86,7 +86,7 @@
 
 	echo '	<p>';
 	echo '<strong>' . str_pad($arvelieYear, 2, "0", STR_PAD_LEFT) . $alphabet[$arvelieMonth] . str_pad($arvelieDay, 2, "0", STR_PAD_LEFT) . '</strong>';
-	echo ' arvelie time since epoque ' . $now->format('Y-m-d') . '.';
+	echo ' arvelie time since epoch ' . $epoch->format('Y-m-d') . '.';
 	echo '	</p>';
 	echo '</footer>';
 
