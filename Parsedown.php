@@ -2003,7 +2003,7 @@ class Extension extends Parsedown
 
     protected function blockReferences($line, $block)
     {
-        if (preg_match('/^{references}/', $line['text']))
+        if (preg_match('/^{references}/', $line['text']) || preg_match('/^{related}/', $line['text']))
         {
             return array(
                 'element' => array(
@@ -2015,7 +2015,7 @@ class Extension extends Parsedown
                     'elements' => array(
                         'h4' => array(
                             'name' => 'h4',
-                            'text' => 'references',
+                            'text' => 'related',
                         ),
                         'references' => array(
                             'name' => 'ul',
@@ -2133,6 +2133,7 @@ class Extension extends Parsedown
                 // assign custom css to tag type
                 $tagcss = "";
                 switch ($tag) {
+                    // growth
                     case 'seed':
                         $tagcss = "tag-seed";
                         break;
@@ -2141,6 +2142,13 @@ class Extension extends Parsedown
                         break;
                     case 'evergreen':
                         $tagcss = "tag-evergreen";
+                        break;
+                    // special
+                    case 'index':
+                        $tagcss = "tag-index";
+                        break;
+                    case 'glossary':
+                        $tagcss = "tag-glossary";
                         break;
                 }
 

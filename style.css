@@ -123,6 +123,16 @@ footer {
 	color: white;
 }
 
+.tag-index {
+	background-color: #f65b34;
+	color: white;
+}
+
+.tag-glossary {
+	background-color: #8E7CC3;
+	color: white;
+}
+
 /* page references */
 .page-references h4 {
 	margin-top: 30px;
