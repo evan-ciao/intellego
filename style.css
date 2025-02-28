@@ -8,7 +8,7 @@
 
 :root {
 	--fonts:
-		"Saitamaar",
+/*		"Saitamaar",*/
 		"MS UI Gothic",
 		sans-serif;
 	--regularfonts:
@@ -42,7 +42,13 @@ a:hover , a:visited:hover {
 img {
 	width: 100%;
 	object-fit: cover;
+	float: right;
+	margin: 10px;
 }
+
+img[src*="#small"] {
+	width:300px;
+ }
 
 nav {
 	padding: 25px 45px 60px;

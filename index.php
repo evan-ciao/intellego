@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
+  <title>intellego</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content=""/>
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-  	<title>Hello, world!</title>
-	<meta name="viewport" content="width=device-width,initial-scale=1"/>
-	<meta name="description" content=""/>
-	<link rel="stylesheet" type="text/css" href="style.css"/>
-	<link rel="icon" href="favicon.png">
+  <link rel="stylesheet" type="text/css" href="katex.min.css">
+  <script defer src="katex.min.js"></script>
+  <script defer src="auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  <link rel="icon" href="favicon.png">
 </head>
 <body>
 	<?php
-	require 'Parsedown.php';
+	require 'ParsedownMath.php';
+	require 'Extension.php';
 	$GLOBALS['parsedown'] = new Extension();
 	$GLOBALS['parsedown']->setMarkupEscaped(false);
 
@@ -79,11 +84,11 @@
 	$now = new DateTime();
 	$elapsed = $now->diff($epoch);
 
-	$arvelieDay = $elapsed->d % 14;
-	$arvelieYear = floor($elapsed->d / 364);
-	$arvelieMonth = floor(($elapsed->d / 14)) - ($elapsed->y * 26);
+	$arvelieDay = $elapsed->days % 14;
+	$arvelieYear = floor($elapsed->days / 364);
+	$arvelieMonth = floor(($elapsed->days / 14)) - ($elapsed->y * 26);
 	$alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
+  
 	echo '	<p>';
 	echo '<strong>' . str_pad($arvelieYear, 2, "0", STR_PAD_LEFT) . $alphabet[$arvelieMonth] . str_pad($arvelieDay, 2, "0", STR_PAD_LEFT) . '</strong>';
 	echo ' arvelie time since epoch ' . $epoch->format('Y-m-d') . '.';
