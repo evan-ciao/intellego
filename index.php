@@ -15,7 +15,6 @@
 </head>
 <body>
 	<?php
-	require 'ParsedownMath.php';
 	require 'Extension.php';
 	$GLOBALS['parsedown'] = new Extension();
 	$GLOBALS['parsedown']->setMarkupEscaped(false);
