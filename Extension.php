@@ -17,21 +17,17 @@ class Extension extends Parsedown
 
     protected function inlineMath($excerpt)
     {
-        if (preg_match('/(?!.*\$\$)\$ (.+) \$/', $excerpt['text'], $matches))
+        if(preg_match_all('/\$(?!\$)\s+(.+?)\s+\$(?!\$)/', $excerpt['text'], $matches))
         {
-            return array(
-                // How many characters to advance the Parsedown's
-                // cursor after being done processing this tag.
-                'extent' => strlen($matches[0]), 
-                'element' => array(
-                    'name' => 'span',
-                    'text' => '\(' . $matches[1] . '\)',
-                    'attributes' => array(
-                        'class' => 'katex',
+            for ($i = 0; $i < count($matches[1]); $i++) {
+                return array(
+                    'extent' => strlen($matches[0][$i]), 
+                    'element' => array(
+                        'name' => 'span',
+                        'text' => '\(' . $matches[1][$i] . '\)',
                     ),
-                ),
-
-            );
+                );
+            }
         }
     }
 
