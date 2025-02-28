@@ -27,7 +27,7 @@
 
 	### HEADER
 	echo '<header>';
-	echo '	<h1><a href="/">intellego</a></h1>';
+	echo '	<h1><a href="/home">intellego</a></h1>';
 	echo '</header>';
 
 	### NAVBAR
